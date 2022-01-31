@@ -73,11 +73,19 @@
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\GroupAddEditViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\StudentAddEditViewModel.cs" />
+    <Compile Include="Views\GroupAddEdit.xaml.cs">
+      <DependentUpon>GroupAddEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StudentAddEdit.xaml.cs">
       <DependentUpon>StudentAddEdit.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\GroupAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

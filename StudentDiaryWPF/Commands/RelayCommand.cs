@@ -7,6 +7,7 @@ namespace StudentDiaryWPF.Commands
     {
         readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;
+        private ICommand confirmAddEditStudent;
 
         public RelayCommand(Action<object> execute)
             : this(execute, null)
@@ -17,6 +18,11 @@ namespace StudentDiaryWPF.Commands
         {
             _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
+        }
+
+        public RelayCommand(ICommand confirmAddEditStudent)
+        {
+            this.confirmAddEditStudent = confirmAddEditStudent;
         }
 
         public bool CanExecute(object parameter)

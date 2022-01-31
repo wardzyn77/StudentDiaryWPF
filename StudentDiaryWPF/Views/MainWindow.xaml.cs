@@ -15,11 +15,5 @@ namespace StudentDiaryWPF.Views
             DataContext = new ViewModels.MainWindowViewModel();
             
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            StudentAddEdit studentAddEdit = new StudentAddEdit();
-            studentAddEdit.Show();
-        }
     }
 }

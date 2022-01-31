@@ -20,6 +20,10 @@ namespace StudentDiaryWPF.ViewModels
             AddStudentCommand = new RelayCommand(AddEditStudent);
             EditStudentCommand = new RelayCommand(AddEditStudent, IsSelectedStudent);
             DeleteStudentCommand = new AsyncRelayCommand(DeleteStudent, IsSelectedStudent);
+            EditGroupCommand = new RelayCommand(EditGroup);
+
+            InitGroups();
+            InitStudents();
             RefreshDiary();
         }
 
@@ -27,9 +31,10 @@ namespace StudentDiaryWPF.ViewModels
         public ICommand AddStudentCommand { get; set; }
         public ICommand EditStudentCommand { get; set; }
         public ICommand DeleteStudentCommand { get; set; }
+        public ICommand EditGroupCommand { get; set; }
 
         private Student _selectedStudent;
-        private ObservableCollection<Student> _students;     //lepiej niż zamiast >> List<Student>
+        private ObservableCollection<Student> _students;     //lepiej niż zamiast >> List<Student> 
         private ObservableCollection<Group> _cmbSearchGroupSource;
         private int _selectedGroupId;
         
@@ -84,12 +89,22 @@ namespace StudentDiaryWPF.ViewModels
         {
                 //29 minuta
             //odśwież z pliku lub z bazy
+            
+           
+        }
+
+        private void InitStudents()
+        {
             _students = new ObservableCollection<Student>
             {
-                new Student {FirstName = "Jan", LastName = "Nowak", Group = new Group {Id=1} },
-                new Student {FirstName = "Jancio", LastName = "Muzykant", Group = new Group {Id=2} },
-                new Student {FirstName = "Piotr", LastName = "Wardzyn", Group = new Group {Id=2} }
+                new Student {FirstName = "Jan", LastName = "Nowak", Group = new Group { Id = 1 } },
+                new Student {FirstName = "Jancio", LastName = "Muzykant", Group = new Group { Id = 2 } },
+                new Student {FirstName = "Piotr", LastName = "Wardzyn", Group = new Group { Id = 2 } }
             };
+        }
+
+        private void InitGroups()
+        {
             _cmbSearchGroupSource = new ObservableCollection<Group>
             {
                 new Group {Id=1, Name = "Wszyscy"},
@@ -108,19 +123,22 @@ namespace StudentDiaryWPF.ViewModels
         {
             //docelowo jest to nie do końca dobre rozwiązanie - dla testów jednostkowych ALE OK
             var addEditStudentWindow = new StudentAddEdit(obj as Student);
+            //var s = new StudentAddEditViewModel(obj as Student);
             addEditStudentWindow.Closed += addEditStudentWindow_Closed;
             addEditStudentWindow.ShowDialog();
         }
 
         private void addEditStudentWindow_Closed(object sender, EventArgs e)
         {
+            
             RefreshDiary();
         }
 
         private async Task DeleteStudent(object obj)
         {
             var metroWindow = Application.Current.MainWindow as MetroWindow;
-            var dialog = await metroWindow.ShowMessageAsync("Usuwanie ucznia", $"Czy na pewno chcesz usunąć ucznia {SelectedStudent.FirstName} {SelectedStudent.LastName}?", MessageDialogStyle.AffirmativeAndNegative);
+            var dialog = await metroWindow.ShowMessageAsync("Usuwanie ucznia", $"Czy na pewno chcesz usunąć ucznia {SelectedStudent.FirstName} {SelectedStudent.LastName}?"
+                , MessageDialogStyle.AffirmativeAndNegative);
             
             if (dialog != MessageDialogResult.Affirmative)
                 return;
@@ -129,5 +147,16 @@ namespace StudentDiaryWPF.ViewModels
             RefreshDiary();
         }
 
+        private void EditGroup(object obj)
+        {
+            var addEditwindow = new GroupAddEdit(obj as Group);
+            addEditwindow.Closed += AddEditwindow_Closed;
+            addEditwindow.ShowDialog();
+        }
+
+        private void AddEditwindow_Closed(object sender, EventArgs e)
+        {
+            RefreshDiary();
+        }
     }
 }

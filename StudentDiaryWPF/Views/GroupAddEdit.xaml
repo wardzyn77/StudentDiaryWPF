@@ -1,0 +1,32 @@
+﻿<mah:MetroWindow x:Class="StudentDiaryWPF.Views.GroupAddEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:StudentDiaryWPF.Views"
+        mc:Ignorable="d"
+        Name="AddEditGroup"
+        Title="Dodaj Klasę" Height="250" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Label Content="Id" Margin="5" VerticalAlignment="Center" />
+        <TextBox Text="{Binding Group.Id}" Margin="5" Grid.Column="1" />
+
+        <Label Content="Nazwa Klasy" Margin="5" Grid.Row="1" VerticalAlignment="Center" />
+        <TextBox Text="{Binding Group.Name}" Margin="5" Grid.Column="1" Grid.Row="1" />
+
+        <Button Content="Anuluj" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=AddEditGroup}" Grid.Row="2" Margin="5" />
+        <Button Content="Zatwierdź" Command="{Binding ConfirmCommand}" CommandParameter="{Binding ElementName=AddEditGroup}" Grid.Column="1" Grid.Row="2" Margin="5" />
+        
+    </Grid>
+</mah:MetroWindow>
