@@ -52,7 +52,7 @@ namespace StudentDiaryWPF.Models.Converters
             };
         }
 
-        public static List<Rating> ToRatingDao(this StudentWraper model)
+        public static List<Rating> RatingToDao(this StudentWraper model)
         {
             var ratings = new List<Rating>();
             if (!string.IsNullOrWhiteSpace(model.Math))

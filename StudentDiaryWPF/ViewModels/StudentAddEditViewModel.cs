@@ -14,7 +14,7 @@ namespace StudentDiaryWPF.ViewModels
     {
         public StudentAddEditViewModel(StudentWraper student = null)
         {
-            ConfirmCommand = new RelayCommand(Confirm);
+            ConfirmCommand = new RelayCommand(Confirm, CanConfirm);
             CancelCommand = new RelayCommand(Close);
 
             if (student != null)
@@ -25,6 +25,11 @@ namespace StudentDiaryWPF.ViewModels
             else
                 Student = new StudentWraper();
             InitGroups();
+        }
+
+        private bool CanConfirm(object obj)
+        {
+            return Student.IsValid;
         }
 
         public ICommand ConfirmCommand { get; set; }

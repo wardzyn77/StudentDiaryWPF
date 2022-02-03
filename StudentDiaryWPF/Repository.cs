@@ -55,7 +55,7 @@ namespace StudentDiaryWPF
         public void UpdateStudent(StudentWraper studentWraper)
         {
             var studentNew = studentWraper.ToDao();
-            var ratingsNew = studentWraper.ToRatingDao();
+            var ratingsNew = studentWraper.RatingToDao();
 
             using (var context = new AplicationDBContext())
             {
@@ -108,7 +108,7 @@ namespace StudentDiaryWPF
         public void AddStudent(StudentWraper studentWraper)
         {
             var studentToAdd = studentWraper.ToDao();
-            var ratings = studentWraper.ToRatingDao();
+            var ratings = studentWraper.RatingToDao();
 
             using (var context = new AplicationDBContext())
             {

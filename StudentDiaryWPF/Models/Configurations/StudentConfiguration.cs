@@ -5,6 +5,12 @@ namespace StudentDiaryWPF.Models.Configurations
 {
     class StudentConfiguration : EntityTypeConfiguration<Student>
     {
+        //private int _firstNameMaxLen;
+        //public int FirstNameMaxLen
+        //{
+        //    get { return _firstNameMaxLen; }
+        //    set { _firstNameMaxLen = value;}
+        //}
         public StudentConfiguration()
         {
             ToTable("dbo.Students");
