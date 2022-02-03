@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using StudentDiaryWPF.ViewModels;
 using StudentDiaryWPF.Models;
 using MahApps.Metro.Controls;
+using StudentDiaryWPF.Models.Wrapes;
 
 namespace StudentDiaryWPF.Views
 {
@@ -22,7 +23,7 @@ namespace StudentDiaryWPF.Views
     /// </summary>
     public partial class GroupAddEdit : MetroWindow
     {
-        public GroupAddEdit(Group group = null)
+        public GroupAddEdit(GroupWraper group = null)
         {
             InitializeComponent();
             DataContext = new GroupAddEditViewModel(group);

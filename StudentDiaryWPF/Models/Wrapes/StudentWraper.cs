@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentDiaryWPF.Models
+﻿
+namespace StudentDiaryWPF.Models.Wrapes
 {
-    public class Student
+    public class StudentWraper
     {
-        public Student()
+        public StudentWraper()
         {
-            Group = new Group();
+            Group = new GroupWraper();
         }
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -22,6 +17,6 @@ namespace StudentDiaryWPF.Models
         public string ForeignLang { get; set; }
         public bool Activities { get; set; }
         public string Comments { get; set; }
-        public Group Group { get; set; }
+        public GroupWraper Group { get; set; }
     }
 }

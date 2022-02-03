@@ -5,12 +5,14 @@ using StudentDiaryWPF.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using StudentDiaryWPF.Models.Wrapes;
+using StudentDiaryWPF.Models.Domains;
 
 namespace StudentDiaryWPF.ViewModels
 {
     class StudentAddEditViewModel : BaseViewModel
     {
-        public StudentAddEditViewModel(Student student = null)
+        public StudentAddEditViewModel(StudentWraper student = null)
         {
             ConfirmCommand = new RelayCommand(Confirm);
             CancelCommand = new RelayCommand(Close);
@@ -21,16 +23,16 @@ namespace StudentDiaryWPF.ViewModels
                 Student = student;
             }
             else
-                Student = new Student();
+                Student = new StudentWraper();
             InitGroups();
         }
 
         public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; set; }
 
-        private Student _student;
+        private StudentWraper _student;
 
-        public Student Student
+        public StudentWraper Student
         {
             get { return _student; }
             set
@@ -40,6 +42,7 @@ namespace StudentDiaryWPF.ViewModels
             }
         }
 
+        private Repository _repository = new Repository();
         private bool _isUpdate;
 
         public bool IsUpdate
@@ -92,12 +95,12 @@ namespace StudentDiaryWPF.ViewModels
 
         private void UpdateStudent()
         {
-            //baza danych
+            _repository.UpdateStudent(Student);
         }
 
         private void AddStudent()
         {
-            //baza danych
+            _repository.AddStudent(Student);
         }
 
         private void CloseWindow(Window window)
@@ -107,14 +110,12 @@ namespace StudentDiaryWPF.ViewModels
 
         private void InitGroups()
         {
-            _groups = new ObservableCollection<Group>
-            {
-                new Group {Id=0, Name = "--Brak--"},
-                new Group {Id=1, Name = "1A"},
-                new Group {Id=2, Name = "2A"},
-                new Group {Id=3, Name = "3A"}
-            };
-            //Student.Group.Id = 0;
+            var groups = _repository.GetGroups();
+            groups.Insert(0, new Group { Id = 0, Name = "-- brak --" });
+
+            _groups = new ObservableCollection<Group>(groups);
+            
+            Student.Group.Id = 0;
         }
     }
 }

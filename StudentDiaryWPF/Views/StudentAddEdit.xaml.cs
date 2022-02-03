@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using StudentDiaryWPF.Models;
+using StudentDiaryWPF.Models.Wrapes;
 
 namespace StudentDiaryWPF.Views
 {
@@ -8,7 +9,7 @@ namespace StudentDiaryWPF.Views
     /// </summary>
     public partial class StudentAddEdit : MetroWindow
     {
-        public StudentAddEdit(Student student = null)
+        public StudentAddEdit(StudentWraper student = null)
         {
             InitializeComponent();
             //powiązanie widoku z viewModel - widok wie, gdzie ma szukać swoich danych

@@ -38,6 +38,12 @@
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.9\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -48,6 +54,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
@@ -68,10 +76,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AplicationDBContext.cs" />
     <Compile Include="Commands\AsyncRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\Student.cs" />
+    <Compile Include="Migrations\202202011126316_InitialCreate.cs" />
+    <Compile Include="Migrations\202202011126316_InitialCreate.Designer.cs">
+      <DependentUpon>202202011126316_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202021215267_SetFirstNameProperties.cs" />
+    <Compile Include="Migrations\202202021215267_SetFirstNameProperties.Designer.cs">
+      <DependentUpon>202202021215267_SetFirstNameProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202021222424_SetLasttNameProperties.cs" />
+    <Compile Include="Migrations\202202021222424_SetLasttNameProperties.Designer.cs">
+      <DependentUpon>202202021222424_SetLasttNameProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Configurations\GroupConfiguration.cs" />
+    <Compile Include="Models\Configurations\RateConfiguration.cs" />
+    <Compile Include="Models\Configurations\StudentConfiguration.cs" />
+    <Compile Include="Models\Converters\StudentConverter.cs" />
+    <Compile Include="Models\Domains\Group.cs" />
+    <Compile Include="Models\Domains\Rating.cs" />
+    <Compile Include="Models\Domains\Student.cs" />
+    <Compile Include="Models\Enum.cs" />
+    <Compile Include="Models\Wrapes\GroupWraper.cs" />
+    <Compile Include="Models\Wrapes\StudentWraper.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\GroupAddEditViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -121,6 +152,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202202011126316_InitialCreate.resx">
+      <DependentUpon>202202011126316_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202021215267_SetFirstNameProperties.resx">
+      <DependentUpon>202202021215267_SetFirstNameProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202021222424_SetLasttNameProperties.resx">
+      <DependentUpon>202202021222424_SetLasttNameProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -135,5 +175,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="DBSripts\202202021222424_SetLasttNameProperties.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

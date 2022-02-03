@@ -8,26 +8,27 @@ using StudentDiaryWPF.Models;
 using StudentDiaryWPF.Commands;
 using MahApps.Metro.Controls;
 using System.Windows;
+using StudentDiaryWPF.Models.Wrapes;
 
 namespace StudentDiaryWPF.ViewModels
 {
     class GroupAddEditViewModel : BaseViewModel
     {
-        public GroupAddEditViewModel(Group group = null)
+        public GroupAddEditViewModel(GroupWraper group = null)
         {
             CancelCommand = new RelayCommand(Cancel);
             ConfirmCommand = new RelayCommand(Confirm);
 
             if (group == null)
-                Group = new Group();
+                Group = new GroupWraper();
             else
             {
                 Group = group;
             }
         }
 
-        private Group _group;
-        public Group Group
+        private GroupWraper _group;
+        public GroupWraper Group
         {
             get { return _group; }
             set

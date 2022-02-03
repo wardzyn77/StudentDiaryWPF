@@ -7,8 +7,10 @@ using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using StudentDiaryWPF.Commands;
-using StudentDiaryWPF.Models;
 using StudentDiaryWPF.Views;
+using StudentDiaryWPF.Models.Wrapes;
+using System.Linq;
+using StudentDiaryWPF.Models.Domains;
 
 namespace StudentDiaryWPF.ViewModels
 {
@@ -16,6 +18,10 @@ namespace StudentDiaryWPF.ViewModels
     {
         public MainWindowViewModel()
         {
+            //using (var context = new AplicationDBContext())
+            //{
+            //    var students = context.Students.ToList();
+            //}
             RefreshStudentCommand = new RelayCommand(RefreshStudent);
             AddStudentCommand = new RelayCommand(AddEditStudent);
             EditStudentCommand = new RelayCommand(AddEditStudent, IsSelectedStudent);
@@ -34,9 +40,11 @@ namespace StudentDiaryWPF.ViewModels
         public ICommand EditGroupCommand { get; set; }
 
         private Student _selectedStudent;
-        private ObservableCollection<Student> _students;     //lepiej niż zamiast >> List<Student> 
+        private ObservableCollection<StudentWraper> _students;     //lepiej niż zamiast >> List<Student> 
         private ObservableCollection<Group> _cmbSearchGroupSource;
         private int _selectedGroupId;
+        private List<Group> _groups;
+        private Repository _repository = new Repository();
         
         public int SelectedGroupId
         {
@@ -68,7 +76,7 @@ namespace StudentDiaryWPF.ViewModels
             }
         }
 
-        public ObservableCollection<Student> Students
+        public ObservableCollection<StudentWraper> Students
         {
             get { return _students; }
             set
@@ -80,38 +88,37 @@ namespace StudentDiaryWPF.ViewModels
 
         private void RefreshStudent(object obj)
         {
-            List<Student> list = new List<Student>();
+            List<StudentWraper> list = new List<StudentWraper>();
             //list = (List < Student > )_students;
             RefreshDiary();
         }
 
         private void RefreshDiary()
         {
-                //29 minuta
+            //29 minuta
             //odśwież z pliku lub z bazy
-            
-           
+            var students = _repository.GetStudents(SelectedGroupId);
+
+            Students = new ObservableCollection<StudentWraper>(students);
+
         }
 
         private void InitStudents()
         {
-            _students = new ObservableCollection<Student>
-            {
-                new Student {FirstName = "Jan", LastName = "Nowak", Group = new Group { Id = 1 } },
-                new Student {FirstName = "Jancio", LastName = "Muzykant", Group = new Group { Id = 2 } },
-                new Student {FirstName = "Piotr", LastName = "Wardzyn", Group = new Group { Id = 2 } }
-            };
+            var students = _repository.GetStudents(0);
+
+            _students = new ObservableCollection<StudentWraper>(students);
+
         }
 
         private void InitGroups()
         {
-            _cmbSearchGroupSource = new ObservableCollection<Group>
-            {
-                new Group {Id=1, Name = "Wszyscy"},
-                new Group {Id=1, Name = "1A"},
-                new Group {Id=2, Name = "2A"},
-                new Group {Id=3, Name = "3A"}
-            };
+            _groups = _repository.GetGroups();
+            _groups.Insert(0, new Group { Id = 0, Name = "Wszystkie" });
+
+            _cmbSearchGroupSource = new ObservableCollection<Group>(_groups);
+
+            SelectedGroupId = 0;
         }
 
         private bool IsSelectedStudent(object obj)
@@ -122,7 +129,7 @@ namespace StudentDiaryWPF.ViewModels
         private void AddEditStudent(object obj)
         {
             //docelowo jest to nie do końca dobre rozwiązanie - dla testów jednostkowych ALE OK
-            var addEditStudentWindow = new StudentAddEdit(obj as Student);
+            var addEditStudentWindow = new StudentAddEdit(obj as StudentWraper);
             //var s = new StudentAddEditViewModel(obj as Student);
             addEditStudentWindow.Closed += addEditStudentWindow_Closed;
             addEditStudentWindow.ShowDialog();
@@ -143,13 +150,14 @@ namespace StudentDiaryWPF.ViewModels
             if (dialog != MessageDialogResult.Affirmative)
                 return;
             //usuwanie ucznia z bazy
+            _repository.DeleteStudent(SelectedStudent.Id);
 
             RefreshDiary();
         }
 
         private void EditGroup(object obj)
         {
-            var addEditwindow = new GroupAddEdit(obj as Group);
+            var addEditwindow = new GroupAddEdit(obj as GroupWraper);
             addEditwindow.Closed += AddEditwindow_Closed;
             addEditwindow.ShowDialog();
         }
