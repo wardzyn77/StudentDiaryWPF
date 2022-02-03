@@ -59,23 +59,33 @@ namespace StudentDiaryWPF
 
             using (var context = new AplicationDBContext())
             {
-                var dbStudentToUpd = context.Students.Find(studentNew.Id);
-                dbStudentToUpd.Activities = studentNew.Activities;
-                dbStudentToUpd.FirstName = studentNew.FirstName;
-                dbStudentToUpd.LastName = studentNew.LastName;
-                dbStudentToUpd.Comments = studentNew.Comments;
-                dbStudentToUpd.GroupId = studentNew.GroupId;
+                UpdateStudentProperties(studentNew, context);
 
-                var studentsRatingOld = context.Ratings
-                    .Where(x => x.StudentId == studentNew.Id).ToList();
+                var oldStudentsRating = GetStudentRatings(studentNew, context);
                 var subjects = new Subject();
                 // ok 50 min
-                //foreach (var subject in subjects)
-                
+                foreach (Subject subject in Enum.GetValues(typeof(Subject)))
                 {
-                    UpdateRate(studentNew, ratingsNew, context, studentsRatingOld, Subject.Math);
+                    UpdateRate(studentNew, ratingsNew, context, oldStudentsRating, subject);
                 }
+                context.SaveChanges();
             }
+        }
+
+        private static List<Rating> GetStudentRatings(Student studentNew, AplicationDBContext context)
+        {
+            return context.Ratings
+                    .Where(x => x.StudentId == studentNew.Id).ToList();
+        }
+
+        private void UpdateStudentProperties(Student studentNew, AplicationDBContext context)
+        {
+            var dbStudentToUpd = context.Students.Find(studentNew.Id);
+            dbStudentToUpd.Activities = studentNew.Activities;
+            dbStudentToUpd.FirstName = studentNew.FirstName;
+            dbStudentToUpd.LastName = studentNew.LastName;
+            dbStudentToUpd.Comments = studentNew.Comments;
+            dbStudentToUpd.GroupId = studentNew.GroupId;
         }
 
         private void UpdateRate(Student student, List<Rating> ratingsNew, AplicationDBContext context, List<Rating> studentsRatingsOld, Subject subject)

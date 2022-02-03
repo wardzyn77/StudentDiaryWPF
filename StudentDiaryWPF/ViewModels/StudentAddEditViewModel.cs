@@ -115,7 +115,7 @@ namespace StudentDiaryWPF.ViewModels
 
             _groups = new ObservableCollection<Group>(groups);
             
-            Student.Group.Id = 0;
+            SelectedGroupId = Student.Group.Id;
         }
     }
 }

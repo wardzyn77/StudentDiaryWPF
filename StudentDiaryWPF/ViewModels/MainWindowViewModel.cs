@@ -88,17 +88,13 @@ namespace StudentDiaryWPF.ViewModels
 
         private void RefreshStudent(object obj)
         {
-            List<StudentWraper> list = new List<StudentWraper>();
-            //list = (List < Student > )_students;
             RefreshDiary();
         }
 
         private void RefreshDiary()
         {
-            //29 minuta
-            //odśwież z pliku lub z bazy
             var students = _repository.GetStudents(SelectedGroupId);
-
+            //Students = _students;
             Students = new ObservableCollection<StudentWraper>(students);
 
         }
@@ -108,6 +104,13 @@ namespace StudentDiaryWPF.ViewModels
             var students = _repository.GetStudents(0);
 
             _students = new ObservableCollection<StudentWraper>(students);
+            //_students = new ObservableCollection<StudentWraper> 
+            //{ 
+            //    new StudentWraper {FirstName = "Piotr", LastName ="Wardzyn"},
+            //    new StudentWraper {FirstName = "Magda", LastName ="Wardz"},
+            //    new StudentWraper {FirstName = "Maciej", LastName ="Wardzynski"}
+            //}
+            //;
 
         }
 
@@ -130,14 +133,12 @@ namespace StudentDiaryWPF.ViewModels
         {
             //docelowo jest to nie do końca dobre rozwiązanie - dla testów jednostkowych ALE OK
             var addEditStudentWindow = new StudentAddEdit(obj as StudentWraper);
-            //var s = new StudentAddEditViewModel(obj as Student);
             addEditStudentWindow.Closed += addEditStudentWindow_Closed;
             addEditStudentWindow.ShowDialog();
         }
 
         private void addEditStudentWindow_Closed(object sender, EventArgs e)
         {
-            
             RefreshDiary();
         }
 
@@ -158,11 +159,11 @@ namespace StudentDiaryWPF.ViewModels
         private void EditGroup(object obj)
         {
             var addEditwindow = new GroupAddEdit(obj as GroupWraper);
-            addEditwindow.Closed += AddEditwindow_Closed;
+            addEditwindow.Closed += AddEditGroupWindow_Closed;
             addEditwindow.ShowDialog();
         }
 
-        private void AddEditwindow_Closed(object sender, EventArgs e)
+        private void AddEditGroupWindow_Closed(object sender, EventArgs e)
         {
             RefreshDiary();
         }

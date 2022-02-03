@@ -27,6 +27,7 @@
                     Margin="5"
                     Height="25" />
             <Button Command="{Binding DeleteStudentCommand}" 
+                    CommandParameter="{Binding SelectedStudent}"
                     Content="Usuń" 
                     Width="80" 
                     Margin="5" 
@@ -58,11 +59,11 @@
             SelectedItem="{Binding SelectedStudent}"
             CanUserAddRows="False"
             IsReadOnly="True"
-            SelectionMode="Single"
+            
             AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden" Header="LP" />
-                <DataGridTextColumn Binding="{Binding FirstName}" Header="Imię" />
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="legia" />
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Nazwisko" />
                 <DataGridTextColumn Binding="{Binding Math}" Header="Matematyka" />
                 <DataGridTextColumn Binding="{Binding Technology}" Header="Technologia" />
