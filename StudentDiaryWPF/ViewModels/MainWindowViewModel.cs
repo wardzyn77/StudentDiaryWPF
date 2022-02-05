@@ -39,7 +39,7 @@ namespace StudentDiaryWPF.ViewModels
         public ICommand DeleteStudentCommand { get; set; }
         public ICommand EditGroupCommand { get; set; }
 
-        private Student _selectedStudent;
+        private StudentWraper _selectedStudent;
         private ObservableCollection<StudentWraper> _students;     //lepiej niż zamiast >> List<Student> 
         private ObservableCollection<Group> _cmbSearchGroupSource;
         private int _selectedGroupId;
@@ -56,7 +56,7 @@ namespace StudentDiaryWPF.ViewModels
             }
         }
 
-        public Student SelectedStudent
+        public StudentWraper SelectedStudent
         {
             get { return _selectedStudent; }
             set
